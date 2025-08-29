@@ -7,4 +7,18 @@ a:active {
 }
 
 
+/* Make modal wider and dark */
+.swal2-video-popup {
+  padding: 0 !important;
+  background: #000 !important;
+  
+}
+
+/* White, smaller title */
+.swal2-video-title {
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  margin-bottom: 12px !important;
+}
 

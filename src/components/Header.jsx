@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   // Dropdown categories
-  const categorySlugs = ["investigation", "lifestyle", "fact-check"];
+  const categorySlugs = ["investigation", "lifestyle", "fact-check", "videos"];
   const isCategoryActive = categorySlugs.some(slug => location.pathname === `/category/${slug}`);
 
   return (
@@ -28,10 +28,42 @@ const Header = () => {
           </NavLink>
 
           <div className="d-flex align-items-center">
-            <div className="social-links">
-              <a href="#" className="facebook"><BsFacebook /></a>
-              <a href="#" className="twitter"><BsTwitter /></a>
-              <a href="#" className="instagram"><BsInstagram /></a>
+            <div className="social-links d-flex align-items-center">
+              <a
+                href="https://web.facebook.com/profile.php?id=61559480481152"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-2"
+              >
+                <BsFacebook />
+              </a>
+
+              <a
+                href="https://x.com/Spotlightngr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-2"
+              >
+                <BsTwitter />
+              </a>
+
+              <a
+                href="https://www.instagram.com/spotlightngr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-2"
+              >
+                <BsInstagram />
+              </a>
+
+              <a
+                href="https://www.tiktok.com/search?q=Spotlightngr&t=1720187038652"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-2"
+              >
+                <i className="bi bi-tiktok"></i>
+              </a>
             </div>
 
             <form className="search-form ms-4" onSubmit={handleSearchSubmit}>
@@ -91,6 +123,15 @@ const Header = () => {
                   className={({ isActive }) => isActive ? "active" : undefined}
                 >
                   Impacts
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/category/videos"
+                  className={({ isActive }) => isActive ? "active" : undefined}
+                >
+                  Videos
                 </NavLink>
               </li>
 

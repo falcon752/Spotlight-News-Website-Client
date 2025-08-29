@@ -1,4 +1,4 @@
-// src/data/mockData.js
+// src/store/mockData.js
 
 // =====================
 // Categories
@@ -9,6 +9,7 @@ export const categories = [
   { id: 3, name: "Fact Check", slug: "fact-check" },
   { id: 4, name: "Lifestyle", slug: "lifestyle" },
   { id: 5, name: "Impacts", slug: "impacts" },
+  { id: 6, name: "Videos", slug: "videos" }, // Video category
 ];
 
 // =====================
@@ -27,7 +28,7 @@ export const posts = [
   {
     id: 1,
     categoryId: 1, // Investigation
-    authorId: 1,   // Julia Parker
+    authorId: 1,
     slug: "uncovering-hidden-scandals",
     img: "/assets/img/blog/blog-post-portrait-1.webp",
     title: "Uncovering Hidden Scandals",
@@ -39,7 +40,7 @@ export const posts = [
   {
     id: 2,
     categoryId: 2, // News
-    authorId: 2,   // Mark Wilson
+    authorId: 2,
     slug: "breaking-down-new-education-reforms",
     img: "/assets/img/blog/blog-post-portrait-2.webp",
     title: "Breaking Down New Education Reforms",
@@ -51,7 +52,7 @@ export const posts = [
   {
     id: 3,
     categoryId: 3, // Fact Check
-    authorId: 3,   // Sarah Johnson
+    authorId: 3,
     slug: "separating-truth-from-viral-misinformation",
     img: "/assets/img/blog/blog-post-portrait-3.webp",
     title: "Separating Truth From Viral Misinformation",
@@ -63,7 +64,7 @@ export const posts = [
   {
     id: 4,
     categoryId: 4, // Lifestyle
-    authorId: 2,   // Mark Wilson
+    authorId: 2,
     slug: "healthy-habits-for-modern-living",
     img: "/assets/img/blog/blog-post-portrait-4.webp",
     title: "Healthy Habits for Modern Living",
@@ -75,7 +76,7 @@ export const posts = [
   {
     id: 5,
     categoryId: 5, // Impacts
-    authorId: 1,   // Julia Parker
+    authorId: 1,
     slug: "understanding-global-economic-shifts",
     img: "/assets/img/blog/blog-post-portrait-5.webp",
     title: "Understanding Global Economic Shifts",
@@ -83,5 +84,38 @@ export const posts = [
     date: "Feb 10, 2025",
     comments: 10,
     readTime: "6 mins",
+  },
+];
+
+// =====================
+// Videos
+// =====================
+export const videos = [
+  {
+    id: 1,
+    categoryId: 6,
+    authorId: 1,
+    title: "Amazing Space Exploration",
+    videoUrl: "https://youtu.be/oTIJunBa6MA?si=AHNRyt-ThDQk1gBf",
+    thumbnail: "https://img.youtube.com/vi/oTIJunBa6MA/maxresdefault.jpg",
+    date: "Aug 25, 2025",
+  },
+  {
+    id: 2,
+    categoryId: 6,
+    authorId: 2,
+    title: "The Future of AI",
+    videoUrl: "https://youtu.be/bzNKQ2FkEJI?si=gOawPPL6LcZEgSUz",
+    thumbnail: "https://img.youtube.com/vi/bzNKQ2FkEJI/maxresdefault.jpg",
+    date: "Aug 27, 2025",
+  },
+  {
+    id: 3,
+    categoryId: 6,
+    authorId: 3,
+    title: "Exploring the Deep Ocean",
+    videoUrl: "https://youtu.be/kX34-IAiapA?si=vEtegkF4rrSvkTwv",
+    thumbnail: "https://img.youtube.com/vi/kX34-IAiapA/maxresdefault.jpg",
+    date: "Aug 28, 2025",
   },
 ];

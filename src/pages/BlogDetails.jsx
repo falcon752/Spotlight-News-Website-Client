@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import SideBar from "../components/SideBar"
 import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/BreadCrumbs";
 
 
 import { posts, categories, authors } from "../store/mockData";
@@ -49,21 +50,9 @@ const BlogDetails = () => {
             <main className="main">
                 {/* Page Title */}
                 <div className="page-title">
-                    <div className="breadcrumbs">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <Link to="/">
-                                        <i className="bi bi-house"></i> Home
-                                    </Link>
-                                </li>
-                                <li className="breadcrumb-item">
-                                    <Link to={`/${category?.slug}`}>{category?.name}</Link>
-                                </li>
-                                <li className="breadcrumb-item active current">{post.title}</li>
-                            </ol>
-                        </nav>
-                    </div>
+                    
+                    <Breadcrumbs />
+
 
                     <div className="title-wrapper">
                         <h1>{post.title}</h1>

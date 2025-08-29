@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { posts, categories, authors } from "../store/mockData";
+import { posts, categories, authors, videos } from "../store/mockData";
 import SideBar from "../components/SideBar";
+import VideoCard from "../components/VideoCard";
+import VideoModal from "../components/VideoModal";
 import { Helmet } from "react-helmet-async";
 
 export default function CategoryPage() {
   const { categorySlug } = useParams();
-  const category = categories.find(c => c.slug === categorySlug);
-  const filteredPosts = category
-    ? posts.filter(p => p.categoryId === category.id)
-    : [];
+  const category = categories.find((c) => c.slug === categorySlug);
 
   const pageTitle = category ? `${category.name} | Spotlight` : "Category | Spotlight";
 
+  const isVideoCategory = categorySlug === "videos";
+  const items = isVideoCategory
+    ? videos.filter((v) => v.categoryId === category?.id)
+    : posts.filter((p) => p.categoryId === category?.id);
+
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
   return (
     <div className="category-page">
-      {/* Helmet for dynamic page title */}
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
@@ -25,84 +30,81 @@ export default function CategoryPage() {
           <div className="breadcrumbs">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/"><i className="bi bi-house"></i> Home</Link></li>
-                <li className="breadcrumb-item active current">{category?.name || "Category"}</li>
+                <li className="breadcrumb-item">
+                  <Link to="/"><i className="bi bi-house"></i> Home</Link>
+                </li>
+                <li className="breadcrumb-item active current">
+                  {category?.name || "Category"}
+                </li>
               </ol>
             </nav>
           </div>
           <div className="title-wrapper">
             <h1>{category?.name || "Category"}</h1>
-            <p>{category ? `All posts under ${category.name}` : "No category found."}</p>
           </div>
         </div>
 
         <div className="container">
           <div className="row">
-            {/* Posts Section */}
             <div className="col-lg-8">
-              <section id="category-postst" className="category-postst section">
+              <section className="category-postst section">
                 <div className="container" data-aos="fade-up" data-aos-delay="100">
                   <div className="row gy-4">
-                    {filteredPosts.length > 0 ? filteredPosts.map(post => {
-                      const author = authors.find(a => a.id === post.authorId);
-                      return (
-                        <div className="col-lg-6" key={post.id}>
-                          <article>
-                            <div className="post-img">
-                              <img src={post.img} alt={post.title} className="img-fluid" />
-                            </div>
-                            <p className="post-category">{category?.name}</p>
-                            <h2 className="title">
-                              <Link to={`/category/${category.slug}/${post.slug}`}>
-                                {post.title}
-                              </Link>
-                            </h2>
-                            <div className="d-flex align-items-center">
-                              <img
-                                src={author?.avatar || ""}
-                                alt={author?.name || "Author"}
-                                className="img-fluid post-author-img flex-shrink-0"
-                              />
-                              <div className="post-meta">
-                                <p className="post-author">{author?.name}</p>
-                                <p className="post-date">
-                                  <time dateTime={post.date}>{post.date}</time>
-                                </p>
+                    {items.length > 0 ? (
+                      isVideoCategory
+                        ? items.map((video) => (
+                            <VideoCard
+                              key={video.id}
+                              video={video}
+                              onPlay={(vid) => setSelectedVideo(vid)}
+                            />
+                          ))
+                        : items.map((post) => {
+                            const author = authors.find((a) => a.id === post.authorId);
+                            return (
+                              <div className="col-lg-6" key={post.id}>
+                                <article>
+                                  <div className="post-img">
+                                    <img src={post.img} alt={post.title} className="img-fluid" />
+                                  </div>
+                                  <p className="post-category">{category.name}</p>
+                                  <h2 className="title">
+                                    <Link to={`/category/${category.slug}/${post.slug}`}>
+                                      {post.title}
+                                    </Link>
+                                  </h2>
+                                  <div className="d-flex align-items-center">
+                                    <img
+                                      src={author?.avatar}
+                                      alt={author?.name}
+                                      className="img-fluid post-author-img flex-shrink-0"
+                                    />
+                                    <div className="post-meta">
+                                      <p className="post-author">{author?.name}</p>
+                                      <p className="post-date">
+                                        <time dateTime={post.date}>{post.date}</time>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </article>
                               </div>
-                            </div>
-                          </article>
-                        </div>
-                      );
-                    }) : <p>No posts in this category.</p>}
-                  </div>
-                </div>
-              </section>
-
-              {/* Pagination (optional) */}
-              <section id="pagination-2" className="pagination-2 section">
-                <div className="container">
-                  <div className="d-flex justify-content-center">
-                    <ul>
-                      <li><a href="#"><i className="bi bi-chevron-left"></i></a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#" className="active">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li>...</li>
-                      <li><a href="#">10</a></li>
-                      <li><a href="#"><i className="bi bi-chevron-right"></i></a></li>
-                    </ul>
+                            );
+                          })
+                    ) : (
+                      <p>No items found in this category.</p>
+                    )}
                   </div>
                 </div>
               </section>
             </div>
 
-            {/* Sidebar */}
             <SideBar />
-
           </div>
         </div>
       </main>
+
+      {/* Video Modal */}
+      <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     </div>
   );
 }

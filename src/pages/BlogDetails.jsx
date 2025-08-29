@@ -8,6 +8,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import SideBar from "../components/SideBar"
 import { Helmet } from "react-helmet-async";
 
+
 import { posts, categories, authors } from "../store/mockData";
 
 
@@ -44,6 +45,7 @@ const BlogDetails = () => {
             <Helmet>
                 <title>{post.title} | Spotlight</title>
             </Helmet>
+
             <main className="main">
                 {/* Page Title */}
                 <div className="page-title">

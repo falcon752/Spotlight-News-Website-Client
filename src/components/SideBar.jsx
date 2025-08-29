@@ -1,17 +1,32 @@
 // components/Sidebar.jsx
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { posts, categories } from "../store/mockData";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search-results?query=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+
   return (
     <div className="col-lg-4 sidebar">
       <div className="widgets-container" data-aos="fade-up" data-aos-delay="200">
         {/* Search Widget */}
         <div className="search-widget widget-item">
           <h3 className="widget-title">Search</h3>
-          <form action="">
-            <input type="text" placeholder="Search..." />
+          <form onSubmit={handleSearchSubmit}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <button type="submit" title="Search">
               <i className="bi bi-search"></i>
             </button>
@@ -25,7 +40,8 @@ const Sidebar = () => {
             {categories.map((cat) => (
               <li key={cat.id}>
                 <Link to={`/category/${cat.slug}`}>
-                  {cat.name} <span>({posts.filter((p) => p.categoryId === cat.id).length})</span>
+                  {cat.name}{" "}
+                  <span>({posts.filter((p) => p.categoryId === cat.id).length})</span>
                 </Link>
               </li>
             ))}

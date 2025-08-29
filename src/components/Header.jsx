@@ -1,23 +1,22 @@
-import React from "react";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { BsFacebook, BsTwitter, BsInstagram, BsSearch, BsChevronDown, BsList } from "react-icons/bs";
 
 const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // current path
+  const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearchClick = (e) => {
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
-    navigate("/search-results");
+    if (searchTerm.trim()) {
+      navigate(`/search-results?query=${encodeURIComponent(searchTerm.trim())}`);
+    }
   };
 
-  // List of category slugs for dropdown
+  // Dropdown categories
   const categorySlugs = ["investigation", "lifestyle", "fact-check"];
-
-  // Dropdown active only if a child link matches current path
-  const isCategoryActive = categorySlugs.some(
-    slug => location.pathname === `/category/${slug}`
-  );
+  const isCategoryActive = categorySlugs.some(slug => location.pathname === `/category/${slug}`);
 
   return (
     <header id="header" className="header position-relative">
@@ -35,9 +34,15 @@ const Header = () => {
               <a href="#" className="instagram"><BsInstagram /></a>
             </div>
 
-            <form className="search-form ms-4">
-              <input type="text" placeholder="Search..." className="form-control" />
-              <button type="submit" className="btn" onClick={handleSearchClick}><BsSearch /></button>
+            <form className="search-form ms-4" onSubmit={handleSearchSubmit}>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="form-control"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button type="submit" className="btn"><BsSearch /></button>
             </form>
           </div>
         </div>
@@ -63,10 +68,7 @@ const Header = () => {
               </li>
 
               <li className={`dropdown ${isCategoryActive ? "active" : ""}`}>
-                <NavLink
-                  to="#"
-                  className={({ isActive }) => undefined} // parent never active
-                >
+                <NavLink to="#" className={() => undefined}>
                   <span>Categories</span> <BsChevronDown className="toggle-dropdown" />
                 </NavLink>
                 <ul>

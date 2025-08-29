@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { posts, categories, authors } from "../store/mockData";
 import SideBar from "../components/SideBar";
+import { Helmet } from "react-helmet-async";
 
 export default function CategoryPage() {
   const { categorySlug } = useParams();
@@ -10,8 +11,15 @@ export default function CategoryPage() {
     ? posts.filter(p => p.categoryId === category.id)
     : [];
 
+  const pageTitle = category ? `${category.name} | Spotlight` : "Category | Spotlight";
+
   return (
     <div className="category-page">
+      {/* Helmet for dynamic page title */}
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
+
       <main className="main">
         <div className="page-title position-relative">
           <div className="breadcrumbs">
@@ -70,7 +78,7 @@ export default function CategoryPage() {
                 </div>
               </section>
 
-              {/* Pagination (optional, same structure as old) */}
+              {/* Pagination (optional) */}
               <section id="pagination-2" className="pagination-2 section">
                 <div className="container">
                   <div className="d-flex justify-content-center">

@@ -56,7 +56,7 @@ const BlogDetails = () => {
 
                     <div className="title-wrapper">
                         <h1>{post.title}</h1>
-                        <p>{post.desc}</p>
+                        {/* <p>{post.desc}</p> */}
                     </div>
                 </div>
 

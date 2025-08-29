@@ -10,9 +10,15 @@ import BlogDetails from "./pages/BlogDetails";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/404";
 import SearchResults from "./pages/SearchResults";
+import Donate from "./pages/Donate";
 
 function App() {
   useTemplateFeatures();
+
+  const handleScrollTop = (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -31,11 +37,22 @@ function App() {
           />
 
           <Route path="/contact" element={<Contact />} />
+          <Route path="/donate" element={<Donate />} />
           <Route path="/search-results" element={<SearchResults />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
+
+      {/* Scroll to Top Button */}
+      <a
+        href="#"
+        id="scroll-top"
+        className="scroll-top d-flex align-items-center justify-content-center"
+        onClick={handleScrollTop}
+      >
+        <i className="bi bi-arrow-up-short"></i>
+      </a>
     </>
   );
 }

@@ -5,17 +5,21 @@ import SideBar from "../components/SideBar";
 import VideoCard from "../components/VideoCard";
 import VideoModal from "../components/VideoModal";
 import { Helmet } from "react-helmet-async";
+import NotFound from "./404";
 
 export default function CategoryPage() {
   const { categorySlug } = useParams();
   const category = categories.find((c) => c.slug === categorySlug);
 
-  const pageTitle = category ? `${category.name} | Spotlight` : "Category | Spotlight";
+  if (!category) {
+    return <NotFound />;
+  }
 
+  const pageTitle = `${category.name} | Spotlight`;
   const isVideoCategory = categorySlug === "videos";
   const items = isVideoCategory
-    ? videos.filter((v) => v.categoryId === category?.id)
-    : posts.filter((p) => p.categoryId === category?.id);
+    ? videos.filter((v) => v.categoryId === category.id)
+    : posts.filter((p) => p.categoryId === category.id);
 
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -34,13 +38,13 @@ export default function CategoryPage() {
                   <Link to="/"><i className="bi bi-house"></i> Home</Link>
                 </li>
                 <li className="breadcrumb-item active current">
-                  {category?.name || "Category"}
+                  {category.name}
                 </li>
               </ol>
             </nav>
           </div>
           <div className="title-wrapper">
-            <h1>{category?.name || "Category"}</h1>
+            <h1>{category.name}</h1>
           </div>
         </div>
 
@@ -103,7 +107,6 @@ export default function CategoryPage() {
         </div>
       </main>
 
-      {/* Video Modal */}
       <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     </div>
   );
